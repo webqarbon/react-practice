@@ -8,7 +8,7 @@ import productsFromServer from './api/products';
 
 export const App = () => {
   const [selectedUserId, setSelectedUserId] = useState(null);
-  const [searchValue, setSearchValue] = useState('');
+  const [query, setQuery] = useState('');
   const [selectedCategoryId, setSelectedCategoryId] = useState([]);
 
   const products = productsFromServer.map(product => {
@@ -47,7 +47,7 @@ export const App = () => {
     );
   }
 
-  const formatedQuery = searchValue.trim().toLowerCase();
+  const formatedQuery = query.trim().toLowerCase();
 
   if (formatedQuery) {
     visibleProducts = visibleProducts.filter(product =>
@@ -58,7 +58,7 @@ export const App = () => {
   const handleResetFilters = () => {
     setSelectedUserId(null);
     setSelectedCategoryId([]);
-    setSearchValue('');
+    setQuery('');
   };
 
   return (
@@ -98,20 +98,21 @@ export const App = () => {
                   type="text"
                   className="input"
                   placeholder="Search"
-                  onChange={event => setSearchValue(event.target.value)}
+                  value={query}
+                  onChange={event => setQuery(event.target.value)}
                 />
 
                 <span className="icon is-left">
                   <i className="fas fa-search" aria-hidden="true" />
                 </span>
 
-                {searchValue && (
+                {query && (
                   <span className="icon is-right">
                     <button
                       data-cy="ClearButton"
                       type="button"
                       className="delete"
-                      onClick={() => setSearchValue('')}
+                      onClick={() => setQuery('')}
                     />
                   </span>
                 )}
